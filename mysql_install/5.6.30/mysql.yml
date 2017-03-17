@@ -1,0 +1,16 @@
+- hosts: my
+  remote_user: root
+  tasks:
+       - name: test connection
+         ping:
+         remote_user: root
+       - name: client rpm packages
+         copy: src=/opt/my_test/MySQL-client-5.6.30-1.el6.x86_64.rpm dest=/tmp/MySQL-client-5.6.30-1.el6.x86_64.rpm
+       - name: server rpm packages
+         copy: src=/opt/my_test/MySQL-server-5.6.30-1.el6.x86_64.rpm dest=/tmp/MySQL-server-5.6.30-1.el6.x86_64.rpm
+       - name: copy install_shell to client
+         copy: src=/opt/my_test/mysql_install.sh dest=/tmp/mysql_install.sh
+       - name: mysql_install.sh mode 755
+         file: path=/tmp/mysql_install.sh mode=755
+       - name: install mysql
+         shell: /bin/sh /tmp/mysql_install.sh
